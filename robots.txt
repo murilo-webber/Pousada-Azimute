@@ -1,0 +1,6 @@
+# Pousada Azimute
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://pousadaazimute.com.br/sitemap.xml

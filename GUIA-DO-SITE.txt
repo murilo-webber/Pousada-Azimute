@@ -1,0 +1,256 @@
+==============================================================
+ POUSADA AZIMUTE - GUIA DO SITE
+==============================================================
+
+Este guia explica o que foi feito, o que VOCE ainda precisa fazer
+(sao poucos passos) e como usar o painel de precos.
+
+
+--------------------------------------------------------------
+1. ANTES DE PUBLICAR (leia isto primeiro)
+--------------------------------------------------------------
+
+a) DOMINIO. Usei "pousadaazimute.com.br" porque e o dominio do e-mail
+   que aparece no site. Se o endereco real do site for outro, troque
+   nestes arquivos (use "localizar e substituir" do seu editor):
+
+     - Em TODOS os arquivos .html, sitemap.xml e robots.txt:
+       localizar  https://pousadaazimute.com.br
+       substituir https://SEU-DOMINIO.com.br
+       (atencao: NAO troque o e-mail reservas@pousadaazimute.com.br)
+
+     - No arquivo .htaccess, 2 linhas marcadas com [DOMINIO]:
+       "www\.pousadaazimute\.com\.br" e "https://pousadaazimute.com.br"
+
+b) HOSPEDAGEM COM PHP. O painel de precos e feito em PHP (versao 7.4
+   ou mais nova). Funciona na maioria das hospedagens compartilhadas
+   (Hostinger, Locaweb, HostGator, UOL Host etc.). NAO funciona em
+   GitHub Pages, Netlify ou Vercel: la o site publico funciona
+   normalmente, mas o painel nao. Se for esse o caso, avise.
+
+c) HTTPS ANTES DO .htaccess. No painel da hospedagem, ative o
+   certificado SSL gratuito (Let's Encrypt) e confirme que
+   https://seu-dominio abre. So depois envie o .htaccess: ele forca
+   HTTPS e, sem certificado, o site deixaria de abrir.
+
+d) PERMISSOES. Duas pastas precisam aceitar gravacao pelo servidor:
+     data/         (guarda os precos)
+     admin/data/   (guarda a senha)
+   Se ao salvar o painel disser "nao foi possivel salvar", mude a
+   permissao dessas pastas para 755 (ou 775) no gerenciador de
+   arquivos da hospedagem.
+
+e) ARQUIVOS OCULTOS. O gerenciador de arquivos as vezes esconde
+   arquivos que comecam com ponto. Confirme que estes 4 foram enviados:
+     .htaccess
+     admin/.htaccess
+     admin/inc/.htaccess
+     admin/data/.htaccess
+   Sem eles, as pastas internas do painel ficam sem a protecao extra.
+   (O painel continua protegido por senha mesmo assim.)
+
+f) PRECOS DE EXEMPLO. Os valores iniciais (Standard 180, Triplo Simples
+   250, Casal Superior 220, Superior Luxo 320, Triplo Luxo 360, Familia
+   Luxo 420) sao INVENTADOS, so para o site nao ficar vazio. Troque
+   pelos valores reais no painel antes de divulgar.
+
+g) FOTOS. Ainda nao ha fotos dos quartos: o site mostra a logo no
+   lugar. Veja img/LEIA-ME.txt para nomes e tamanho.
+   Na pagina "Estrutura" (estrutura.html) as 5 fotos tambem estao com
+   a logo como imagem provisoria; ao ter as fotos reais, troque o
+   src="logo.png" de cada uma pelo arquivo da foto.
+
+
+--------------------------------------------------------------
+2. PAINEL DE PRECOS
+--------------------------------------------------------------
+
+Endereco:   https://SEU-DOMINIO/admin/login.php
+Usuario:    admin
+Senha:      provisoria, enviada na conversa (nao esta escrita neste
+            arquivo de proposito)
+
+No primeiro acesso o painel OBRIGA a criar uma senha nova.
+
+Para mudar um preco: entre, digite o valor (ex.: 180 ou 180,50), clique
+em "Salvar precos". O site ja mostra o novo valor, sem precisar enviar
+nenhum arquivo. Campo em branco = "Valores sob consulta".
+Tambem da para editar o aviso que aparece abaixo dos precos.
+
+Se errar um valor: o painel guarda a versao anterior em
+data/precos.anterior.json (basta copiar o conteudo de volta para
+data/precos.json).
+
+Seguranca do painel: senha guardada criptografada, protecao contra
+tentativas em massa (5 erros = bloqueio de 15 minutos), saida
+automatica apos 30 minutos parado, protecao contra formularios
+forjados, e o endereco /admin/ nao e indexado pelo Google.
+
+ESQUECEU A SENHA? Guarde uma copia do arquivo admin/data/auth.json.php
+que veio neste pacote (zip). Para redefinir, envie essa copia de volta
+para admin/data/ (substituindo a atual): voce volta a entrar com a
+senha provisoria e o painel pede uma nova.
+
+
+--------------------------------------------------------------
+3. TEMA CLARO E ESCURO
+--------------------------------------------------------------
+
+Ha um botao redondo (sol/lua) no topo de todas as paginas e do painel.
+A escolha de cada visitante fica salva no navegador dele.
+
+O tema inicial e o ESCURO (o visual original do site). Para mudar:
+abra theme.js e altere a linha
+   const DEFAULT_THEME = 'dark';
+para 'light' (claro) ou 'system' (segue o tema do celular/computador).
+
+Existe uma logo propria para o tema claro (logo-claro.png), gerada a
+partir da original: as letras brancas viram escuras e o laranja fica.
+
+
+--------------------------------------------------------------
+4. OS 12 ITENS DE SEO
+--------------------------------------------------------------
+
+ 1. sitemap.xml ............ FEITO. 10 paginas. Na Search Console
+                             (item 8) voce envia o endereco dele.
+ 2. robots.txt ............. FEITO. Libera o site, bloqueia /admin/ e
+                             aponta para o sitemap.
+ 3. Title e description .... FEITO. Unicos em cada pagina, titulos com
+                             ate 60 caracteres e descricoes de 70 a
+                             160, com Torres/RS e o nome do quarto.
+ 4. URLs canonicas ......... FEITO. Cada pagina tem <link rel=canonical>
+                             (a 404 nao tem, de proposito).
+ 5. Open Graph ............. FEITO. og:title, description, url, image
+                             e cartao do Twitter. Imagem de 1200x630
+                             em og-pousada-azimute.jpg (logo sobre
+                             fundo escuro). Se tiver uma foto bonita da
+                             fachada, vale trocar essa imagem mantendo
+                             o nome e o tamanho.
+ 6. Imagens ................ FEITO. Logo reduzida de ~600 KB para
+                             ~35 KB; width/height em todas as imagens
+                             (evita "pulos" na tela); carregamento
+                             tardio (lazy) nas imagens abaixo da dobra;
+                             textos alternativos descritivos; favicons
+                             em todos os tamanhos. As fotos dos quartos
+                             voce ainda vai enviar: siga img/LEIA-ME.txt
+                             (JPG, 1600 px de largura, 150 a 300 KB).
+ 7. Dados estruturados ..... FEITO. JSON-LD em cada pagina: pousada
+                             (LodgingBusiness, com endereco, telefone,
+                             comodidades), cada quarto (HotelRoom),
+                             lista de atracoes de Torres, migalhas de
+                             pao e pagina de contato.
+                             Obs.: nao coloquei PRECO nos dados
+                             estruturados de proposito. Os precos mudam
+                             pelo painel e dados desatualizados podem
+                             prejudicar voce no Google.
+ 8. Search Console ......... VOCE FAZ (nao da para fazer por arquivo):
+      a) Acesse search.google.com/search-console e entre com sua
+         conta Google.
+      b) "Adicionar propriedade" > "Dominio" > digite seu dominio.
+      c) O Google pede para criar um registro TXT no DNS do dominio
+         (no site onde o dominio foi registrado, ex.: Registro.br).
+         Cole o valor e clique em Verificar (pode levar horas).
+      d) Menu "Sitemaps" > digite sitemap.xml > Enviar.
+      e) Menu "Inspecao de URL" > cole https://SEU-DOMINIO/ >
+         "Solicitar indexacao". Repita para as outras paginas.
+ 9. Google Analytics ....... PRONTO, FALTA O SEU ID:
+      a) Em analytics.google.com crie uma conta e uma propriedade GA4
+         e um "fluxo de dados da Web".
+      b) Copie o "ID da métrica" (comeca com G-).
+      c) Abra analytics.js e troque G-XXXXXXXXXX (linha 11) pelo seu ID.
+      Enquanto o ID nao for trocado, NADA do Google e carregado.
+      Depois de trocado, aparece um aviso de cookies (exigencia da
+      LGPD) e o Analytics so liga se o visitante aceitar.
+      Eventos ja programados (aparecem em Relatorios > Tempo real):
+        whatsapp_click ... com o local (topo, rodape, botao flutuante,
+                           pagina do quarto) e o nome do quarto
+        phone_click, email_click, instagram_click
+        map_directions_click (botao "Como chegar")
+        room_details_click (botao "Consultar" de um quarto)
+        gallery_photo_open, spot_photos_open (fotos da galeria e das
+                           atracoes de Torres)
+      Dica: em Administrador > Eventos, marque whatsapp_click como
+      "evento-chave" para o Google contar como conversao.
+10. Pagina 404 ............. FEITA. 404.html no mesmo visual do site,
+                             com botoes para voltar. O .htaccess ja a
+                             usa quando alguem abre um endereco que nao
+                             existe. Nao e indexada.
+11. HTTPS e redirecionamentos FEITO no .htaccess: http -> https, e
+                             www -> sem www, em um unico salto (evita
+                             o Google ver o mesmo site em 4 enderecos).
+                             Veja o item 1c acima: ative o SSL antes.
+12. Cabecalhos de seguranca  FEITO no .htaccess: HSTS, CSP (so carrega
+                             o que o site realmente usa), nosniff,
+                             X-Frame-Options, Referrer-Policy e
+                             Permissions-Policy.
+      ATENCAO 1: o HSTS faz o navegador exigir HTTPS neste dominio por
+      1 ano. Antes de publicar, confirme que o certificado esta ativo
+      e se renova sozinho.
+      ATENCAO 2: a CSP bloqueia qualquer servico externo que nao esteja
+      listada. Se um dia colocar um video do YouTube, Google Fontes,
+      chat etc., o servico precisa ser liberado na linha
+      "Content-Security-Policy" do .htaccess (ou nao vai aparecer).
+      Se a hospedagem for NGINX (e nao Apache), o .htaccess e
+      ignorado: os mesmos cabecalhos e redirecionamentos precisam ser
+      configurados no nginx, pelo suporte da hospedagem.
+
+Para conferir depois de publicar (gratis):
+   - securityheaders.com ........... nota dos cabecalhos
+   - search.google.com/test/rich-results ... valida os dados estruturados
+   - pagespeed.web.dev ............. velocidade (celular e computador)
+   - opengraph.xyz ................. como o link aparece no WhatsApp
+
+
+--------------------------------------------------------------
+5. OUTRAS CORRECOES FEITAS NO SEU CODIGO
+--------------------------------------------------------------
+
+- index.html tinha uma tag quebrada no final ("</a" sem fechar) que
+  "engolia" o carregamento do script.js: o menu do celular, a animacao
+  do titulo e a copia automatica da logo de reserva nao funcionavam na
+  pagina inicial. Corrigido. O botao flutuante do Instagram tambem
+  estava sem o estilo; agora tem.
+- Os botoes brancos/laranja e todos os textos passaram a usar variaveis
+  de cor (necessario para o tema claro). O visual escuro continua igual.
+- O botao "Fale Conosco" some no celular como antes; agora o botao de
+  tema fica ao lado do menu.
+
+
+--------------------------------------------------------------
+6. MAPA DOS ARQUIVOS
+--------------------------------------------------------------
+
+  index.html, Torres.html, estrutura.html, contato.html ... paginas
+  quarto-*.html (6) ................ uma pagina por quarto
+  404.html ......................... pagina de erro
+  style.css ........................ visual (temas no inicio do arquivo)
+  script.js ........................ menu, galeria, carrossel, precos
+  theme.js ......................... tema claro/escuro
+  analytics.js ..................... Google Analytics e eventos
+  data/precos.json ................. precos (editado pelo painel)
+  admin/ ........................... painel (login, precos, senha)
+  img/ ............................. fotos dos quartos (voce envia)
+  logo.png, logo-claro.png ......... logos (tema escuro / claro)
+  ventos.png, favicon*.png/.ico,
+  apple-touch-icon.png ............. icones
+  og-pousada-azimute.jpg ........... imagem de compartilhamento
+  sitemap.xml, robots.txt, .htaccess  SEO e servidor
+
+
+--------------------------------------------------------------
+7. O QUE FOI TESTADO (e o que nao foi)
+--------------------------------------------------------------
+
+Testado no Chrome: os dois temas (computador e celular), o carregamento
+dos precos a partir do arquivo, o painel inteiro (login, bloqueio por
+tentativas, troca obrigatoria de senha, salvar precos, entradas
+invalidas, sair, sessao antiga cair ao trocar a senha, protecao contra
+formulario forjado), a CSP sem nenhum bloqueio nas paginas e no painel,
+e todos os eventos do Analytics (com um ID de teste).
+
+NAO testado: o .htaccess em um servidor Apache de verdade (nao havia um
+disponivel) e o Google Maps/Font Awesome carregando da internet (estavam
+bloqueados no ambiente de teste). Por isso, depois de publicar, abra o
+site em https://, teste o http:// e o www., abra um endereco errado
+para ver a 404, e confira os icones e o mapa.

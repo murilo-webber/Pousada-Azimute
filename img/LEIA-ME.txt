@@ -1,0 +1,14 @@
+Coloque aqui as fotos dos quartos (ex.: standard-1.jpg ... standard-6.jpg, casal-superior-1.jpg ... casal-superior-5.jpg etc.).
+Enquanto uma foto nao existir, o site mostra a logo no lugar.
+
+Fotos dos pontos turisticos de Torres: crie a pasta img/torres/ e use
+molhes-1.jpg, molhes-2.jpg, molhes-3.jpg, grande-1.jpg ... (3 fotos por local:
+molhes, grande, farol, mampituba, guarita, gastronomia).
+
+Como preparar as fotos (isso deixa o site rapido e melhora a posicao no Google):
+- Formato JPG.
+- Largura de 1600 px (nao precisa mais que isso).
+- Peso entre 150 e 300 KB por foto. Site gratuito para reduzir: squoosh.app
+- Nome do arquivo igual ao que o site espera (veja os exemplos acima).
+- Se trocar uma foto mantendo o mesmo nome, quem ja visitou pode demorar ate 1 semana
+  para ver a nova. Para aparecer na hora, use um nome novo e ajuste no HTML.

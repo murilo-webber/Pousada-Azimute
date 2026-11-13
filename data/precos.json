@@ -1,0 +1,30 @@
+{
+  "atualizado": "2026-11-13T06:44:20-03:00",
+  "observacao": "Valores por diária, sujeitos à disponibilidade e à temporada. Confirme pelo WhatsApp.",
+  "quartos": {
+    "standard": {
+      "nome": "Standard",
+      "preco": 180
+    },
+    "triplo-simples": {
+      "nome": "Triplo Simples",
+      "preco": 250
+    },
+    "casal-superior": {
+      "nome": "Casal Superior",
+      "preco": 220
+    },
+    "superior-luxo": {
+      "nome": "Superior Luxo",
+      "preco": 320
+    },
+    "triplo-luxo": {
+      "nome": "Triplo Luxo",
+      "preco": 360
+    },
+    "familia-luxo": {
+      "nome": "Família Luxo",
+      "preco": 420
+    }
+  }
+}
